@@ -1,4 +1,4 @@
-﻿/*
+/*
 MIT License
 Copyright (c) 2023 Monzu77
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -86,7 +86,7 @@ namespace GrassInfo
     
                     if(server.online)
                     {
-                        var panel = new Panel($"[steelblue1]{inputIP}[/]\n\n[green]Online: {server?.online}[/]\n[green]IP: {server?.ip}[/]\n[green]Port: {server?.port}[/]\n[wheat1]Version: {server?.version}[/]\n[wheat1]Gamemode: {server?.gamemode}[/]\n[wheat1]Map: {server?.map}[/]\n[wheat1]Software: {server?.software}[/]\n[wheat1]Protocol: {server?.protocol}[/]\n[wheat1]Hostname: {server?.hostname}[/]\n[red]Ping: {server?.debug.ping}[/]\n[red]Query: {server?.debug.query}[/]\n[red]Srv: {server?.debug.srv}[/]\n[red]QueryMismatch: {server?.debug.querymismatch}[/]\n[red]IPinSrv: {server?.debug.ipinsrv}[/]\n[red]CNameinSrv: {server?.debug.cnameinsrv}[/]\n[red]AnimatedMotd: {server?.debug.animatedmotd}[/]\n[red]CacheTime: {server?.debug.cachetime}[/]\n[red]CacheExpire: {server?.debug.cacheexpire}[/]\n[red]ApiVersion: {server?.debug.apiversion}[/]");
+                        var panel = new Panel($"[green]Online: {server?.online}[/]\n[green]IP: {server?.ip}[/]\n[green]Port: {server?.port}[/]\n[wheat1]Version: {server?.version}[/]\n[wheat1]Gamemode: {server?.gamemode}[/]\n[wheat1]Map: {server?.map}[/]\n[wheat1]Software: {server?.software}[/]\n[wheat1]Protocol: {server?.protocol}[/]\n[wheat1]Hostname: {server?.hostname}[/]\n[red]Ping: {server?.debug.ping}[/]\n[red]Query: {server?.debug.query}[/]\n[red]Srv: {server?.debug.srv}[/]\n[red]QueryMismatch: {server?.debug.querymismatch}[/]\n[red]IPinSrv: {server?.debug.ipinsrv}[/]\n[red]CNameinSrv: {server?.debug.cnameinsrv}[/]\n[red]AnimatedMotd: {server?.debug.animatedmotd}[/]\n[red]CacheTime: {server?.debug.cachetime}[/]\n[red]CacheExpire: {server?.debug.cacheexpire}[/]\n[red]ApiVersion: {server?.debug.apiversion}[/]");
                         panel.RoundedBorder();
     
                         AnsiConsole.Write(panel);
