@@ -12,7 +12,7 @@ dotnet publish -r win-x64 -c Release --self-contained true
 ```
 Make sure to replace win-x64 with your OS.
 
-Your build will be located in GarryMC\obj\Release\net7.0\yourOS\publish
+Your build will be located in: `GarryMC\obj\Release\net7.0\<yourOS>\publish`
 
 # Contribution
 Contributing to GarryMC is simple. You have to fork the repository and clone it. Make your changes. After you are done, just push the changes to your fork and make a pull request. 
