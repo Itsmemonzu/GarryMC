@@ -21,7 +21,7 @@ SOFTWARE.
 using System.Text.Json;
 using Spectre.Console;
 
-namespace GrassInfo
+namespace GrassMC
 {
     public class Server
     {
@@ -34,7 +34,7 @@ namespace GrassInfo
         public long? protocol { get; set; }
         public string? software { get; set; }
         public string? map { get; set; }
-        public Debug debug { get; set; }
+        public Debug? debug { get; set; }
 
     }
     public class Debug
@@ -51,80 +51,46 @@ namespace GrassInfo
         public int? apiversion { get; set; }
     }
 
-    public class ServerInfo
+    public class Data
     {
         private static readonly HttpClient client = new HttpClient();
 
-        private static async Task Main()
-        {
-            Console.WriteLine("");
-
-            var version = AnsiConsole.Prompt(
-    new SelectionPrompt<string>()
-        .Title("What [green]version of the game[/] are you searching for?")
-        .PageSize(10)
-        .AddChoices(new[] {
-            "Java", "Bedrock",
+        public string version = AnsiConsole.Prompt(new SelectionPrompt<string>()
+            .Title("What [green]version of the game[/] are you searching for?")
+            .PageSize(10)
+            .AddChoices(new[] {
+                "Java", "Bedrock",
         }));
 
-            Console.WriteLine("");
+        public async Task<Server?> getData() {
             AnsiConsole.Markup("[white]  Enter an IP: [/]");
-
             string? inputIP = Console.ReadLine();
+            string url;
 
-            string urlJava = "https://api.mcsrvstat.us/2/"+inputIP;
-
-            string urlBedrock = "https://api.mcsrvstat.us/bedrock/2/"+inputIP;
-            
-            // Java
-            if(version.Equals("Java"))
+            if (version.Contains("Java"))
             {
-                try
-                {
-                    var response = await client.GetStringAsync(urlJava);
-                    Server? server = JsonSerializer.Deserialize<Server>(response);
-    
-                    if(server.online)
-                    {
-                        var panel = new Panel($"[green]Online: {server?.online}[/]\n[green]IP: {server?.ip}[/]\n[green]Port: {server?.port}[/]\n[wheat1]Version: {server?.version}[/]\n[wheat1]Gamemode: {server?.gamemode}[/]\n[wheat1]Map: {server?.map}[/]\n[wheat1]Software: {server?.software}[/]\n[wheat1]Protocol: {server?.protocol}[/]\n[wheat1]Hostname: {server?.hostname}[/]\n[red]Ping: {server?.debug.ping}[/]\n[red]Query: {server?.debug.query}[/]\n[red]Srv: {server?.debug.srv}[/]\n[red]QueryMismatch: {server?.debug.querymismatch}[/]\n[red]IPinSrv: {server?.debug.ipinsrv}[/]\n[red]CNameinSrv: {server?.debug.cnameinsrv}[/]\n[red]AnimatedMotd: {server?.debug.animatedmotd}[/]\n[red]CacheTime: {server?.debug.cachetime}[/]\n[red]CacheExpire: {server?.debug.cacheexpire}[/]\n[red]ApiVersion: {server?.debug.apiversion}[/]");
-                        panel.RoundedBorder();
-    
-                        AnsiConsole.Write(panel);
-
-                    }
-                }
-                catch (HttpRequestException e)
-                {
-                    Console.WriteLine(e);
-                }
-
+                url = "https://api.mcsrvstat.us/2/"+inputIP;
+            }
+            else {
+                url = "https://api.mcsrvstat.us/bedrock/2/"+inputIP;
             }
 
-            // Bedrock
-            if(version.Equals("Bedrock"))
-            {
-                try
-                {
-                    var response = await client.GetStringAsync(urlBedrock);
-                    Server? server = JsonSerializer.Deserialize<Server>(response);
-    
-                    if(server.online)
-                    {
-                        var rule = new Rule($"[steelblue1]{inputIP}[/]");
-                        AnsiConsole.Write(rule);
-                        var panel = new Panel($"[green]Online: {server?.online}[/]\n[green]IP: {server?.ip}[/]\n[green]Port: {server?.port}[/]\n[wheat1]Version: {server?.version}[/]\n[wheat1]Gamemode: {server?.gamemode}[/]\n[wheat1]Map: {server?.map}[/]\n[wheat1]Software: {server?.software}[/]\n[wheat1]Protocol: {server?.protocol}[/]\n[wheat1]Hostname: {server?.hostname}[/]\n\n[deeppink2]  Debug  [/]\n[red]    Ping: {server?.debug.ping}[/]\n[red]    Query: {server?.debug.query}[/]\n[red]    Srv: {server?.debug.srv}[/]\n[red]    QueryMismatch: {server?.debug.querymismatch}[/]\n[red]    IPinSrv: {server?.debug.ipinsrv}[/]\n[red]    CNameinSrv: {server?.debug.cnameinsrv}[/]\n[red]    AnimatedMotd: {server?.debug.animatedmotd}[/]\n[red]    CacheTime: {server?.debug.cachetime}[/]\n[red]    CacheExpire: {server?.debug.cacheexpire}[/]\n[red]    ApiVersion: {server?.debug.apiversion}[/]");
-                        panel.RoundedBorder();
-    
-                        AnsiConsole.Write(panel);
+            var response = await client.GetStringAsync(url);
+            var server = JsonSerializer.Deserialize<Server>(response);
 
-                    }
-                }
-                catch (HttpRequestException e)
-                {
-                    Console.WriteLine(e);
-                }
-
-            }
+            return server;
         }
     }
-}        
+
+    public static class MainRenderer
+    {
+        public static async Task Main() {
+            Data? data = new Data();
+            Server? server = await data.getData();
+            Panel? panel = new Panel($"[green]Online: {server?.online}[/]\n[green]IP: {server?.ip}[/]\n[green]Port: {server?.port}[/]\n[wheat1]Version: {server?.version}[/]\n[wheat1]Gamemode: {server?.gamemode}[/]\n[wheat1]Map: {server?.map}[/]\n[wheat1]Software: {server?.software}[/]\n[wheat1]Protocol: {server?.protocol}[/]\n[wheat1]Hostname: {server?.hostname}[/]\n\n[deeppink2]  Debug  [/]\n[red]    Ping: {server?.debug?.ping}[/]\n[red]    Query: {server?.debug?.query}[/]\n[red]    Srv: {server?.debug?.srv}[/]\n[red]    QueryMismatch: {server?.debug?.querymismatch}[/]\n[red]    IPinSrv: {server?.debug?.ipinsrv}[/]\n[red]    CNameinSrv: {server?.debug?.cnameinsrv}[/]\n[red]    AnimatedMotd: {server?.debug?.animatedmotd}[/]\n[red]    CacheTime: {server?.debug?.cachetime}[/]\n[red]    CacheExpire: {server?.debug?.cacheexpire}[/]\n[red]    ApiVersion: {server?.debug?.apiversion}[/]");
+            panel.RoundedBorder();
+
+            AnsiConsole.Write(panel);
+        }
+    }
+}
