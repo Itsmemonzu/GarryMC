@@ -17,10 +17,18 @@ jobs:
         include:
           - os: windows-latest
             platform: win-x64
+            path: D:\a\GarryMC\GarryMC\bin\Release\net7.0\win-x64\publish\*
+            name: garry-win
+
           - os: macos-latest
-            platform: osx.12-x64
+            platform: osx-x64
+            path: /Users/runner/work/GarryMC/GarryMC/bin/Release/net7.0/osx.12-x64/publish/*
+            name: garry-osx
+
           - os: ubuntu-latest
             platform: linux-x64
+            path: /home/runner/work/GarryMC/GarryMC/bin/Release/net7.0/linux-x64/publish/*
+            name: garry-linux
 
     steps:
     - name: Checkout
@@ -35,7 +43,8 @@ jobs:
       run: |
         dotnet publish -r ${{ matrix.platform }} -c Release --self-contained true
 
-    # - name: Upload artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     path: D:\a\GarryMC\GarryMC\bin\Release\net7.0\win-x64\publish\*
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.name }}
+        path: ${{ matrix.path }}
