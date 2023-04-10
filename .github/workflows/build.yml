@@ -22,7 +22,7 @@ jobs:
 
           - os: macos-latest
             platform: osx-x64
-            path: /Users/runner/work/GarryMC/GarryMC/bin/Release/net7.0/osx.12-x64/publish/*
+            path: /Users/runner/work/GarryMC/GarryMC/bin/Release/net7.0/osx-x64/publish/*
             name: garry-osx
 
           - os: ubuntu-latest
