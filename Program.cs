@@ -1,4 +1,4 @@
-/*
+﻿/*
 MIT License
 Copyright (c) 2023 Monzu77
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -91,6 +91,7 @@ namespace GrassMC
             panel.RoundedBorder();
 
             AnsiConsole.Write(panel);
+            Console.Read();
         }
     }
 }
