@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        configuration: [Debug, Release]
+        configuration: [Release]
 
     runs-on: windows-latest
 
@@ -27,12 +27,11 @@ jobs:
       run: |
         dotnet publish -r win-x64 -c Release --self-contained true
 
-    - name: Get changed files
-      uses: jitterbit/get-changed-files@v1
-      id: files
+    - name: List changed files
+      run: |
+        git diff --name-only
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        path: ${{ steps.files.outputs.all }}
+    # - name: Upload artifact
+    #   uses: actions/upload-artifact@v3
+      
     
