@@ -35,7 +35,7 @@ jobs:
       run: |
         dotnet publish -r ${{ matrix.platform }} -c Release --self-contained true
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        path: D:\a\GarryMC\GarryMC\bin\Release\net7.0\win-x64\publish\*
+    # - name: Upload artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     path: D:\a\GarryMC\GarryMC\bin\Release\net7.0\win-x64\publish\*
