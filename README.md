@@ -2,7 +2,7 @@
 GarryMC is an asynchronous Minecraft server lookup tool that runs in your terminal using [Spectre.Console](https://github.com/spectreconsole/spectre.console). 
 
 ## Installation & Usage 
-This program is dependent on [Spectre.Console](https://github.com/spectreconsole/spectre.console). To build the program, you need to use
+This program is dependant on [Spectre.Console](https://github.com/spectreconsole/spectre.console). To build the program, you need to use
 ```
 dotnet publish -r win-x64 -c Release
 ```
