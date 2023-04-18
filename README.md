@@ -1,6 +1,6 @@
 <div align="center">
-# GarryMC
-</p>
+# GarryMC<br>
+
 GarryMC is an asynchronous Minecraft server lookup tool that runs in your terminal!
 
 [![Build](https://github.com/Itsmemonzu/GarryMC/actions/workflows/build.yml/badge.svg)](https://github.com/Itsmemonzu/GarryMC/actions/workflows/build.yml)
