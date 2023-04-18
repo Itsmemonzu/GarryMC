@@ -37,6 +37,7 @@ namespace GrassMC
         public string? software { get; set; }
         public string? map { get; set; }
         public Debug? debug { get; set; }
+        public Players? players { get; set; }
 
     }
     public class Debug
@@ -51,6 +52,11 @@ namespace GrassMC
         public long? cachetime { get; set; }
         public long? cacheexpire { get; set; }
         public int? apiversion { get; set; }
+    }
+    public class Players
+    {
+        public long? online { get; set; }
+        public long? max { get; set; } 
     }
 
     public class Data
@@ -104,10 +110,30 @@ namespace GrassMC
                 Data? data = new Data();
                 Server? server = await data.getData(InputIP: p.Object.Address, Bedrock: p.Object.Bedrock);
 
-                Panel? panel = new Panel($"[green]Online: {server?.online}[/]\n[green]IP: {server?.ip}[/]\n[green]Port: {server?.port}[/]\n[wheat1]Version: {server?.version}[/]\n[wheat1]Gamemode: {server?.gamemode}[/]\n[wheat1]Map: {server?.map}[/]\n[wheat1]Software: {server?.software}[/]\n[wheat1]Protocol: {server?.protocol}[/]\n[wheat1]Hostname: {server?.hostname}[/]\n\n[deeppink2]  Debug  [/]\n[red]    Ping: {server?.debug?.ping}[/]\n[red]    Query: {server?.debug?.query}[/]\n[red]    Srv: {server?.debug?.srv}[/]\n[red]    QueryMismatch: {server?.debug?.querymismatch}[/]\n[red]    IPinSrv: {server?.debug?.ipinsrv}[/]\n[red]    CNameinSrv: {server?.debug?.cnameinsrv}[/]\n[red]    AnimatedMotd: {server?.debug?.animatedmotd}[/]\n[red]    CacheTime: {server?.debug?.cachetime}[/]\n[red]    CacheExpire: {server?.debug?.cacheexpire}[/]\n[red]    ApiVersion: {server?.debug?.apiversion}[/]");
+                Panel? panel = new Panel($"Online: [green]{server?.online}[/]\nIP: {server?.ip}\nPort: {server?.port}");
                 panel.RoundedBorder();
+                panel.Padding = new Padding(2, 1, 15, 1);
 
+                string bools = $"\n   Ping: [red]{server?.debug?.ping}[/]\n   Query: [red]{server?.debug?.query}[/]\n   Srv: [red]{server?.debug?.srv}[/]\n   QueryMismatch: [red]{server?.debug?.querymismatch}[/]\n   IPinSrv: [red]{server?.debug?.ipinsrv}[/]\n   CNameinSrv: [red]{server?.debug?.cnameinsrv}[/]\n   AnimatedMotd: [red]{server?.debug?.animatedmotd}[/]";
+                
                 AnsiConsole.Write(panel);
+                AnsiConsole.Markup($"   Version: {server?.version}");
+                Console.WriteLine("");
+
+                if(server?.gamemode != null)
+                {
+                    AnsiConsole.Markup($"   Gamemode: {server?.gamemode}");
+                }
+                if(server?.map != null)
+                {
+                    AnsiConsole.Markup($"   Map: {server?.map}");
+                }
+                if(server?.software != null)
+                {
+                    AnsiConsole.Markup($"   Software: {server?.software}");
+                }
+                AnsiConsole.Markup($"   Protocol: {server?.protocol}\n\n   Players online: {server?.players.online} / {server?.players.max}\n\n   Cache Time: [paleturquoise1]{server?.debug?.cachetime}[/]\n   Cache Expire: [paleturquoise1]{server?.debug?.cacheexpire}[/]\n   API Version: [paleturquoise1]{server?.debug?.apiversion}[/]\n\n   Hostname: {server?.hostname}");
+                AnsiConsole.Markup("\n" + bools);
                 Console.Read();
             }   
         }
